@@ -29,3 +29,4 @@ void deregisterProduct(Registry& registry, long identifier);
 void cartAddProduct(Registry const& registry, Cart& cart, long identifier);
 void cartDeleteProduct(Cart& cart, long identifier);
 auto calculateCartValue(Registry const& registry, Cart const& cart) -> double;
+void cartClose(Cart& cart);

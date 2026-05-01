@@ -211,3 +211,24 @@ TEST(
 
     EXPECT_EQ(calculateCartValue(registry, cart), price * random_product_count);
 }
+
+TEST(
+  KasaTests,
+  ProductCartClosing_RandomizedCartLengthClosing_CartIsFullyEmptiedByDeletingEveryProductIdentifier)
+{
+    Registry registry;
+    registerProduct(registry, { 1, "apple", 5.00 });
+    Cart cart;
+    std::random_device my_random_device;
+    std::mt19937 my_generator(my_random_device());
+    std::uniform_int_distribution<> distr(1, 100);
+    int random_product_count = distr(my_generator);
+
+    for (int _ = 0; _ < random_product_count; ++_)
+    {
+        cartAddProduct(registry, cart, 1);
+    }
+    cartClose(cart);
+
+    EXPECT_EQ(cart.size(), 0);
+}

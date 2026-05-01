@@ -41,3 +41,11 @@ auto calculateCartValue(Registry const& registry, Cart const& cart) -> double
       [registry](auto accumulator, auto identifier)
       { return accumulator + registry.at(identifier).price; });
 }
+
+void cartClose(Cart& cart)
+{
+    for (auto identifier : cart)
+    {
+        cartDeleteProduct(cart, identifier);
+    }
+}
