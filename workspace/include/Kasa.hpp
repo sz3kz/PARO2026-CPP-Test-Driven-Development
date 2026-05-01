@@ -22,3 +22,4 @@ using Cart = std::vector<double>;
 void registerProduct(Registry& registry, struct Product const& product);
 void deregisterProduct(Registry& registry, double id);
 void cartAddProduct(Registry const& registry, Cart& cart, double id);
+void cartDeleteProduct(Cart& cart, double id);

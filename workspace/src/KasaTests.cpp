@@ -146,3 +146,30 @@ TEST(
     }
     EXPECT_EQ(cart.size(), random_product_count);
 }
+
+TEST(
+  KasaTests,
+  ProductCartDeletion_DeletingRegisteredProduct_PopulatedCartDeincrementsSizeWhenDeletingRegisteredProduct)
+{
+    Registry registry;
+    Cart cart;
+
+    registerProduct(registry, { 1, "apple", 5.00 });
+    cartAddProduct(registry, cart, 1);
+    cartDeleteProduct(cart, 1);
+    EXPECT_EQ(cart.size(), 0);
+}
+
+
+TEST(
+  KasaTests,
+  ProductCartDeletion_DeletingInvalidProduct_PopulatedCartSizeStaysTheSameWhenDeletingInvalidProduct)
+{
+    Registry registry;
+    Cart cart;
+
+    registerProduct(registry, { 1, "apple", 5.00 });
+    cartAddProduct(registry, cart, 1);
+    cartDeleteProduct(cart, 2);
+    EXPECT_EQ(cart.size(), 1);
+}

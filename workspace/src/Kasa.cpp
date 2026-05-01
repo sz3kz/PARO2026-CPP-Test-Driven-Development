@@ -36,3 +36,16 @@ void cartAddProduct(Registry const& registry, Cart& cart, double id)
     }
     cart.push_back(id);
 }
+
+void cartDeleteProduct(Cart& cart, double id)
+{
+    auto iterator =
+      std::find_if(cart.begin(),
+                   cart.end(),
+                   [id](auto current_id) { return current_id == id; });
+    if (iterator == cart.end())
+    {
+        return;
+    }
+    cart.erase(iterator);
+}
