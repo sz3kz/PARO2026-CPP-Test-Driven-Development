@@ -14,21 +14,24 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-
-add_executable(
-  sample_test
-  src/testZero.cpp 
-  src/sampleTests.cpp
+add_library(kasa
+  src/Kasa.cpp
 )
+target_include_directories(kasa PUBLIC include)
+target_compile_features(kasa PUBLIC cxx_std_23)
 
-target_include_directories(sample_test PUBLIC include)
-target_link_libraries(sample_test gmock_main gtest gmock)
-target_compile_features(sample_test PUBLIC cxx_std_23)
+add_executable(kasa_tests 
+  src/KasaTests.cpp
+)
+target_include_directories(kasa_tests PUBLIC include)
+target_compile_features(kasa_tests PUBLIC cxx_std_23)
+target_link_libraries(kasa_tests gmock_main gtest gmock kasa)
 
 add_custom_target(run_tests
-                  COMMAND sample_test
-                  DEPENDS sample_test
+                  COMMAND kasa_tests
+                  DEPENDS kasa_tests
                   USES_TERMINAL)
 
 enable_testing()
-add_test(tests sample_test)
+add_test(tests kasa_tests)
+
