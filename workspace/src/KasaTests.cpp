@@ -232,6 +232,26 @@ TEST(
 
     EXPECT_EQ(cart.getEntryCount(), 0);
 }
+
+TEST(
+  KasaTests,
+  ProductPromotions_ActivatingLoyaltyCard_RegistryActivatesLoyaltyCardViaMethod)
+{
+    Registry registry;
+    registry.activate_loyalty_card();
+    EXPECT_EQ(registry.loyalty_card_active, true);
+}
+
+TEST(
+  KasaTests,
+  ProductPromotions_DeactivatingLoyaltyCard_RegistryDeactivatesLoyaltyCardViaMethod)
+{
+    Registry registry;
+    registry.activate_loyalty_card();
+    registry.deactivate_loyalty_card();
+    EXPECT_EQ(registry.loyalty_card_active, false);
+}
+
 TEST(KasaTests, demo)
 {
     Registry registry;

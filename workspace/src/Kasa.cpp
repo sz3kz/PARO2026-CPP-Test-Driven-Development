@@ -6,6 +6,16 @@ void Registry::add(struct Product const& product)
     contents.emplace(product.identifier, product);
 }
 
+void Registry::activate_loyalty_card()
+{
+    loyalty_card_active = true;
+}
+
+void Registry::deactivate_loyalty_card()
+{
+    loyalty_card_active = false;
+}
+
 void Registry::del(long identifier)
 {
     contents.erase(identifier);

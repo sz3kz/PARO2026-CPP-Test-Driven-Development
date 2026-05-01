@@ -27,7 +27,10 @@ struct Product
 struct Registry
 {
     std::map<long, Product> contents;
+    bool loyalty_card_active{ false };
     void add(struct Product const& product);
+    void activate_loyalty_card();
+    void deactivate_loyalty_card();
     void del(long identifier);
     [[nodiscard]] auto getEntryCount() const -> size_t;
     void print() const;
