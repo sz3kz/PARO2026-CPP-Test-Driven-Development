@@ -17,6 +17,8 @@ struct Product
 };
 
 using Registry = std::vector<Product>;
+using Cart = std::vector<double>;
 
 void registerProduct(Registry& registry, struct Product const& product);
 void deregisterProduct(Registry& registry, double id);
+void cartAddProduct(Registry const& registry, Cart& cart, double id);

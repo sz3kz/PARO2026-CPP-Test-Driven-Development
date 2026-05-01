@@ -23,3 +23,16 @@ void deregisterProduct(Registry& registry, double id)
     }
     registry.erase(iterator);
 }
+
+void cartAddProduct(Registry const& registry, Cart& cart, double id)
+{
+    auto iterator =
+      std::find_if(registry.begin(),
+                   registry.end(),
+                   [id](auto temp_product) { return temp_product.id == id; });
+    if (iterator == registry.end())
+    {
+        return;
+    }
+    cart.push_back(id);
+}

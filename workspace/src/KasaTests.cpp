@@ -94,3 +94,55 @@ TEST(
     deregisterProduct(registry, registry.at(0).id);
     EXPECT_EQ(registry.size(), random_product_count - 1);
 }
+
+TEST(
+  KasaTests,
+  ProductCartAddition_AddingRegisteredProduct_EmptyCartGainsSizeAfterAddingRegisteredProduct)
+{
+    Registry registry;
+    Cart cart;
+
+    registerProduct(registry, { 1, "apple", 5.00 });
+    cartAddProduct(registry, cart, 1);
+    EXPECT_EQ(cart.size(), 1);
+}
+
+TEST(
+  KasaTests,
+  ProductCartAddition_AddingUnregisteredProduct_EmptyCartRemainsEmptyAfterAddingUnregisteredProduct)
+{
+    Registry registry;
+    Cart cart;
+    cartAddProduct(registry, cart, 1);
+    EXPECT_EQ(cart.size(), 0);
+}
+
+TEST(KasaTests, ProductCartAddition_AddProductOfDuplicateId_ProductAddedToCart)
+{
+    Registry registry;
+    Cart cart;
+
+    registerProduct(registry, { 1, "apple", 5.00 });
+    cartAddProduct(registry, cart, 1);
+    cartAddProduct(registry, cart, 1);
+    EXPECT_EQ(cart.size(), 2);
+}
+
+TEST(
+  KasaTests,
+  ProductCartAddition_RandomizedProductCount_CartSizeMatchesGeneratedProductCount)
+{
+    Registry registry;
+    Cart cart;
+    std::random_device my_random_device;
+    std::mt19937 my_generator(my_random_device());
+    std::uniform_int_distribution<> distr(1, 100);
+    int random_product_count = distr(my_generator);
+
+    registerProduct(registry, { 1, "apple", 5.00 });
+    for (int i = 0; i < random_product_count; ++i)
+    {
+        cartAddProduct(registry, cart, 1);
+    }
+    EXPECT_EQ(cart.size(), random_product_count);
+}
