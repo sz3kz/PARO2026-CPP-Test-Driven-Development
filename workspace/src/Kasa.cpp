@@ -1,7 +1,7 @@
 #include "Kasa.hpp"
 #include <algorithm>
 
-void addProduct(Registry& registry, struct Product const& product)
+void registerProduct(Registry& registry, struct Product const& product)
 {
     if (std::any_of(registry.begin(),
                     registry.end(),
@@ -11,7 +11,7 @@ void addProduct(Registry& registry, struct Product const& product)
     registry.push_back(product);
 }
 
-void deleteProduct(Registry& registry, double id)
+void deregisterProduct(Registry& registry, double id)
 {
     auto iterator =
       std::find_if(registry.begin(),

@@ -4,7 +4,7 @@
 
 TEST(
   KasaTests,
-  ProductAddition_RandomizedProductCount_RegistrySizeMatchesGeneratedProductCount)
+  ProductRegistration_RandomizedProductCount_RegistrySizeMatchesGeneratedProductCount)
 {
     Registry registry;
     std::random_device my_random_device;
@@ -18,19 +18,19 @@ TEST(
         temp_product.id = i + 10;
         temp_product.name = "Product";
         temp_product.price = 10.00;
-        addProduct(registry, temp_product);
+        registerProduct(registry, temp_product);
     }
     EXPECT_EQ(registry.size(), random_product_count);
 }
 
 TEST(KasaTests,
-     ProductAddition_IgnoreProductOfDuplicateId_ProductNotAddedToRegistry)
+     ProductRegistration_IgnoreProductOfDuplicateId_ProductNotAddedToRegistry)
 {
     Registry registry;
     struct Product productA(1, "MyUniqueProduct", 10.00);
     struct Product productB(1, "AnotherTotallyDifferentProduct", 67.00);
-    addProduct(registry, productA);
-    addProduct(registry, productB);
+    registerProduct(registry, productA);
+    registerProduct(registry, productB);
     EXPECT_EQ(registry.size(), 1);
 }
 
@@ -75,7 +75,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductDeletion_RegistrySizeAfterDeletion_RegistrySizeIsDecrementedAfterDeletingOneProduct)
+  ProductDeregistration_RegistrySizeAfterDeletion_RegistrySizeIsDecrementedAfterDeletingOneProduct)
 {
     Registry registry;
     std::random_device my_random_device;
@@ -89,8 +89,8 @@ TEST(
         temp_product.id = i + 10;
         temp_product.name = "Product";
         temp_product.price = 10.00;
-        addProduct(registry, temp_product);
+        registerProduct(registry, temp_product);
     }
-    deleteProduct(registry, registry.at(0).id);
+    deregisterProduct(registry, registry.at(0).id);
     EXPECT_EQ(registry.size(), random_product_count - 1);
 }
