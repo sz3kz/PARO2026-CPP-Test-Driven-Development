@@ -33,6 +33,13 @@ void Registry::update_promotion_status()
 
 void Registry::add_promotion(long identity, double discount)
 {
+    // Registers a DISCOUNT-type promotion.
+    // Only if identifier is of a registered product.
+    auto iterator = contents.find(identity);
+    if (iterator == contents.end())
+    {
+        return;
+    }
     promotions.emplace(
       identity,
       Promotion(identity, PromotionType::DISCOUNT, discount, 0, false));
