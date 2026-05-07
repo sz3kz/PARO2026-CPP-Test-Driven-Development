@@ -14,7 +14,7 @@ test:
 	cd ${DIRECTORY_BUILD} && ${BUILD_SYSTEM_COMMAND} run_tests
 
 tidiness-check: test
-	git push dummy main --dry-run
+	git push origin main --dry-run
 
 upload:
-	git push dummy main
+	git push origin main
