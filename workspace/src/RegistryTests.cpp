@@ -17,8 +17,8 @@ TEST(
     long identifier_aplifier = 10;
     for (int i = 0; i < random_product_count; ++i)
     {
-        registry.add(
-          { static_cast<long>(i * identifier_aplifier), "Product", price });
+        registry.add(Product(
+          static_cast<long>(i * identifier_aplifier), "Product", price));
     }
     EXPECT_EQ(registry.getEntryCount(), random_product_count);
 }
@@ -50,7 +50,7 @@ TEST(
 
     for (int i = 0; i < random_product_count; ++i)
     {
-        registry.add({ i + 10, "Product", 10.00 });
+        registry.add(Product(i + 10, "Product", 10.00));
     }
     registry.del(registry.contents.begin()->second.identifier);
     EXPECT_EQ(registry.getEntryCount(), random_product_count - 1);

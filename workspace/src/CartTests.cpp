@@ -10,7 +10,7 @@ TEST(
     Registry registry;
     Cart cart;
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     cart.add(registry, 1);
     EXPECT_EQ(cart.getEntryCount(), 1);
 }
@@ -30,7 +30,7 @@ TEST(KasaTests, ProductCartAddition_AddProductOfDuplicateId_ProductAddedToCart)
     Registry registry;
     Cart cart;
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     cart.add(registry, 1);
     cart.add(registry, 1);
     EXPECT_EQ(cart.getEntryCount(), 2);
@@ -47,7 +47,7 @@ TEST(
     std::uniform_int_distribution<> distr(1, 100);
     int random_product_count = distr(my_generator);
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     for (int i = 0; i < random_product_count; ++i)
     {
         cart.add(registry, 1);
@@ -62,7 +62,7 @@ TEST(
     Registry registry;
     Cart cart;
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     cart.add(registry, 1);
     cart.del(1);
     EXPECT_EQ(cart.getEntryCount(), 0);
@@ -75,7 +75,7 @@ TEST(
     Registry registry;
     Cart cart;
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     cart.del(1);
     EXPECT_EQ(cart.getEntryCount(), 0);
 }
@@ -87,7 +87,7 @@ TEST(
     Registry registry;
     Cart cart;
 
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     cart.add(registry, 1);
     cart.del(2);
     EXPECT_EQ(cart.getEntryCount(), 1);
@@ -98,7 +98,7 @@ TEST(
   ProductCartTotalCalcuation_ExampleCartTotalCalculation_ProperlyCalculateExampleCart)
 {
     Registry registry;
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     Cart cart;
     std::random_device my_random_device;
     std::mt19937 my_generator(my_random_device());
@@ -119,7 +119,7 @@ TEST(
   ProductCartTotalCalcuation_ExampleCartTotalCalculationWithDiscount_ProperlyCalculateExampleCartWithDiscount)
 {
     Registry registry;
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     registry.add_promotion(1, 0.2);
     registry.activate_loyalty_card();
     registry.update_promotion_status();
@@ -144,7 +144,7 @@ TEST(
   ProductCartTotalCalcuation_ExampleCartTotalCalculationWithBulk_ProperlyCalculateExampleCartWithBulk)
 {
     Registry registry;
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     registry.add_promotion(1, 3);
     registry.activate_loyalty_card();
     registry.update_promotion_status();
@@ -171,7 +171,7 @@ TEST(
   ProductCartClosing_RandomizedCartLengthClosing_CartIsFullyEmptiedByDeletingEveryProductIdentifier)
 {
     Registry registry;
-    registry.add({ 1, "apple", 5.00 });
+    registry.add(Product(1, "apple", 5.00));
     Cart cart;
     std::random_device my_random_device;
     std::mt19937 my_generator(my_random_device());

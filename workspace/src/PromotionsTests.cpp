@@ -27,7 +27,7 @@ TEST(
   ProductPromotions_PromotionRegistration_RegistryCorrectlyRegistersDiscountPromotion)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 0.2);
     EXPECT_EQ(registry.promotions.at(10).type, PromotionType::DISCOUNT);
     EXPECT_EQ(registry.promotions.at(10).discount, 0.2);
@@ -49,7 +49,7 @@ TEST(
   ProductPromotions_PromotionRegistration_RegistryCorrectlyRegistersBulkPromotion)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 5);
     EXPECT_EQ(registry.promotions.at(10).type, PromotionType::BULK);
     EXPECT_EQ(registry.promotions.at(10).discount, 0.0);
@@ -70,7 +70,7 @@ TEST(KasaTests,
      ProductPromotions_PromotionActivation_RegistryCorrectlyActivatesPromotion)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 5);
     registry.activate_promotion(10);
     EXPECT_EQ(registry.promotions.at(10).is_active, true);
@@ -81,7 +81,7 @@ TEST(
   ProductPromotions_PromotionActivation_RegistryCorrectlyDeactivatesPromotion)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 5);
     registry.activate_promotion(10);
     registry.deactivate_promotion(10);
@@ -93,8 +93,8 @@ TEST(
   ProductPromotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnActivatedLoyaltyCard)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
-    registry.add({ 9, "banana", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
+    registry.add(Product(9, "banana", 10.00));
     registry.add_promotion(10, 5);
     registry.add_promotion(9, 0.2);
     registry.activate_loyalty_card();
@@ -108,8 +108,8 @@ TEST(
   ProductPromotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnDeactivatedLoyaltyCard)
 {
     Registry registry;
-    registry.add({ 10, "apple", 10.00 });
-    registry.add({ 9, "banana", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
+    registry.add(Product(9, "banana", 10.00));
     registry.add_promotion(10, 5);
     registry.add_promotion(9, 0.2);
 
@@ -129,7 +129,7 @@ TEST(
 {
     Registry registry;
     Cart cart;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 5);
     cart.add(registry, loyalty_card_identifier);
     EXPECT_EQ(registry.promotions.at(10).is_active, true);
@@ -141,7 +141,7 @@ TEST(
 {
     Registry registry;
     Cart cart;
-    registry.add({ 10, "apple", 10.00 });
+    registry.add(Product(10, "apple", 10.00));
     registry.add_promotion(10, 5);
     cart.add(registry, loyalty_card_identifier);
     cart.add(registry, loyalty_card_identifier);

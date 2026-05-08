@@ -6,9 +6,9 @@
 TEST(KasaTests, demo)
 {
     Registry registry;
-    registry.add({ 1, "apple", 5.300 });
-    registry.add({ 2, "banana", 15.00 });
-    registry.add({ 3, "kiwi", 3.00 });
+    registry.add(Product(1, "apple", 5.300));
+    registry.add(Product(2, "banana", 15.00));
+    registry.add(Product(3, "kiwi", 3.00));
     registry.add_promotion(1, 0.2);
     registry.add_promotion(3, 3);
     Cart cart;
@@ -52,7 +52,6 @@ TEST(KasaTests, demo)
                 long identifier;
                 std::string name;
                 double price;
-                struct Product product;
                 std::cout << "Enter Product ID (long): ";
                 std::cin >> identifier;
                 std::cout << "Enter Name: ";
@@ -60,7 +59,7 @@ TEST(KasaTests, demo)
                 std::getline(std::cin, name);
                 std::cout << "Enter Price: ";
                 std::cin >> price;
-                registry.add({ identifier, name, price });
+                registry.add(Product(identifier, name, price));
                 std::cout << "Product registered successfully.\n";
                 break;
             }
