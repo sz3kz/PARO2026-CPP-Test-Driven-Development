@@ -1,6 +1,10 @@
 #include "Kasa.hpp"
+#include "Cart.hpp"
 #include "Product.hpp"
+#include "Promotion.hpp"
+#include "Registry.hpp"
 #include <algorithm>
+#include <numeric>
 
 void Registry::add(struct Product const& product)
 {

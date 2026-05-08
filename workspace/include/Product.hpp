@@ -1,4 +1,6 @@
 #pragma once
+#include "Product.hpp"
+#include <iostream>
 #include <string>
 
 struct Product

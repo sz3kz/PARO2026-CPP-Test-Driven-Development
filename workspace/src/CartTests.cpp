@@ -1,5 +1,7 @@
+#include "Cart.hpp"
 #include "Kasa.hpp"
 #include "Product.hpp"
+#include "Registry.hpp"
 #include <gtest/gtest.h>
 #include <random>
 
