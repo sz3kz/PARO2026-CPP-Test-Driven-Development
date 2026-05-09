@@ -19,5 +19,4 @@ struct Registry
     void del(long identifier);
     [[nodiscard]] auto getEntryCount() const -> size_t;
     void print() const;
-    void print_promotions() const;
 };

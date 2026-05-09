@@ -116,11 +116,3 @@ void Registry::print() const
         std::cout << pair.second << '\n';
     }
 }
-
-void Registry::print_promotions() const
-{
-    for (auto const& pair : promotions)
-    {
-        std::cout << pair.second << '\n';
-    }
-}

@@ -11,4 +11,5 @@ struct Cart
     [[nodiscard]] auto getEntryCount() const -> size_t;
     void close(Registry& registry);
     void print(Registry const& registry) const;
+    void print_promotions(Registry const& registry) const;
 };

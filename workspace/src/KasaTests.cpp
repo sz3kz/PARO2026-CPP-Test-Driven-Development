@@ -1,9 +1,54 @@
+#include "Cart.hpp"
 #include "Product.hpp"
 #include "Registry.hpp"
 #include "World.hpp"
 #include <gtest/gtest.h>
 #include <random>
 
+TEST(KasaTests, printingDeactivatedCard)
+{
+    Registry registry;
+    registry.add(Product(1, "apple", 2.00));
+    registry.add(Product(2, "banana", 4.00));
+    registry.add(Product(3, "kiwi", 8.00));
+    registry.add_promotion(1, 2);
+    registry.add_promotion(2, 0.1);
+    registry.add_promotion(3, 0.1);
+    Cart cart;
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 2);
+    std::cout << "Registry:" << std::endl;
+    registry.print();
+    std::cout << "Promotions:" << std::endl;
+    cart.print_promotions(registry);
+    std::cout << "Cart:" << std::endl;
+    cart.print(registry);
+}
+
+TEST(KasaTests, printingActiveCard)
+{
+    Registry registry;
+    registry.add(Product(1, "apple", 2.00));
+    registry.add(Product(2, "banana", 4.00));
+    registry.add(Product(3, "kiwi", 8.00));
+    registry.add_promotion(1, 2);
+    registry.add_promotion(2, 0.1);
+    registry.add_promotion(3, 0.1);
+    Cart cart;
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 2);
+    cart.add(registry, loyalty_card_identifier);
+    std::cout << "Registry:" << std::endl;
+    registry.print();
+    std::cout << "Promotions:" << std::endl;
+    cart.print_promotions(registry);
+    std::cout << "Cart:" << std::endl;
+    cart.print(registry);
+}
+
+/*
 TEST(KasaTests, demo)
 {
     Registry registry;
@@ -18,7 +63,7 @@ TEST(KasaTests, demo)
     std::cout << "Registered Items:" << std::endl;
     registry.print();
     std::cout << "Registered Promotions:" << std::endl;
-    registry.print_promotions();
+    cart.print_promotions(registry);
     std::cout << "Selected Items:" << std::endl;
     cart.print(registry);
     std::cout << "Current Total: " << cart.calculateValue(registry)
@@ -130,3 +175,4 @@ TEST(KasaTests, demo)
         }
     }
 }
+*/

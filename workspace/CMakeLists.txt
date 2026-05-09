@@ -17,14 +17,13 @@ FetchContent_MakeAvailable(googletest)
 add_library(kasa
   src/Cart.cpp
   src/Product.cpp
-  src/Promotion.cpp
   src/Registry.cpp
 )
 target_include_directories(kasa PUBLIC include)
 target_compile_features(kasa PUBLIC cxx_std_23)
 
 add_executable(kasa_tests 
-  #src/KasaTests.cpp
+  src/KasaTests.cpp
   src/ProductTests.cpp
   src/RegistryTests.cpp
   src/CartTests.cpp

@@ -1,5 +1,6 @@
 #include "Cart.hpp"
 #include "Promotion.hpp"
+#include <algorithm>
 #include <numeric>
 
 void Cart::add(Registry& registry, long identifier)
@@ -119,5 +120,35 @@ void Cart::print(Registry const& registry) const
     for (auto identifier : contents)
     {
         std::cout << registry.contents.at(identifier) << '\n';
+    }
+}
+
+void Cart::print_promotions(Registry const& registry) const
+{
+    for (auto const& [identifier, promotion] : registry.promotions)
+    {
+        if (promotion.type == PromotionType::DISCOUNT)
+        {
+            auto iterator =
+              std::find(contents.begin(), contents.end(), identifier);
+            std::cout << "[ " << (promotion.is_active ? "unlocked" : "locked")
+                      << " | "
+                      << (iterator != contents.end() ? "applicable"
+                                                     : "inapplicable")
+                      << " | " << promotion.identifier << " -> "
+                      << promotion.discount * 100 << "% OFF! ]" << std::endl;
+        }
+        else
+        {
+            int count =
+              std::count(contents.begin(), contents.end(), identifier);
+            std::cout << "[ " << (promotion.is_active ? "unlocked" : "locked")
+                      << " | "
+                      << (count >= promotion.nth_free ? "applicable"
+                                                      : "inapplicable")
+                      << " | " << promotion.identifier << " -> "
+                      << promotion.nth_free - 1 << " +1 GRATIS!! ]"
+                      << std::endl;
+        }
     }
 }
