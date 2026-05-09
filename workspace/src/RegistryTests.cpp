@@ -55,3 +55,22 @@ TEST(
     registry.del(registry.contents.begin()->second.identifier);
     EXPECT_EQ(registry.getEntryCount(), random_product_count - 1);
 }
+
+TEST(
+  KasaTests,
+  RegistryDepopulation_EmptyRegistryDeletionOp_EmptyRegistryDoesNotCrashWhenDeletingProduct)
+{
+    Registry registry;
+    registry.del(1);
+    EXPECT_EQ(registry.getEntryCount(), 0);
+}
+
+TEST(
+  KasaTests,
+  RegistryDepopulation_InvalidProductDeletion_RegistryDoesNotCrashWhenDeletingInvalidProduct)
+{
+    Registry registry;
+    registry.add(Product(1, "product", 10.00));
+    registry.del(2);
+    EXPECT_EQ(registry.getEntryCount(), 1);
+}
