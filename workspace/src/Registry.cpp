@@ -3,7 +3,10 @@
 
 void Registry::add(struct Product const& product)
 {
-    contents.emplace(product.identifier, product);
+    if (product.identifier != invalid_identifier)
+    {
+        contents.emplace(product.identifier, product);
+    }
 }
 
 void Registry::activate_loyalty_card()

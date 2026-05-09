@@ -18,7 +18,7 @@ TEST(
     for (int i = 0; i < random_product_count; ++i)
     {
         registry.add(Product(
-          static_cast<long>(i * identifier_aplifier), "Product", price));
+          static_cast<long>(i + identifier_aplifier), "Product", price));
     }
     EXPECT_EQ(registry.getEntryCount(), random_product_count);
 }
@@ -34,6 +34,17 @@ TEST(KasaTests,
     registry.add(Product(
       duplicate_identifier, "AnotherTotallyDifferentProduct", random_price));
     EXPECT_EQ(registry.getEntryCount(), 1);
+}
+
+TEST(
+  KasaTests,
+  RegistryPopulation_IgnoreProductsOfInvalidParameters_ProductsNotAddedToRegistry)
+{
+    Registry registry;
+    registry.add(Product(-1, "Bad product id", 10.00));
+    registry.add(Product(10, "", 10.00));
+    registry.add(Product(10, "Black-er Friday deal", -10.00));
+    EXPECT_EQ(registry.getEntryCount(), 0);
 }
 
 TEST(
