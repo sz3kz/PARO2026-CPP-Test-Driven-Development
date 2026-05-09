@@ -5,18 +5,16 @@
 #include <gtest/gtest.h>
 #include <random>
 
-TEST(
-  KasaTests,
-  ProductPromotions_ActivatingLoyaltyCard_RegistryActivatesLoyaltyCardViaMethod)
+TEST(KasaTests,
+     Promotions_ActivatingLoyaltyCard_RegistryActivatesLoyaltyCardViaMethod)
 {
     Registry registry;
     registry.activate_loyalty_card();
     EXPECT_EQ(registry.loyalty_card_active, true);
 }
 
-TEST(
-  KasaTests,
-  ProductPromotions_DeactivatingLoyaltyCard_RegistryDeactivatesLoyaltyCardViaMethod)
+TEST(KasaTests,
+     Promotions_DeactivatingLoyaltyCard_RegistryDeactivatesLoyaltyCardViaMethod)
 {
     Registry registry;
     registry.activate_loyalty_card();
@@ -26,7 +24,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductPromotions_PromotionRegistration_RegistryCorrectlyRegistersDiscountPromotion)
+  Promotions_PromotionRegistration_RegistryCorrectlyRegistersDiscountPromotion)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -39,16 +37,15 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductPromotions_PromotionRegistration_RegistryDoesNotRegisterDiscountPromotionForInvalidProduct)
+  Promotions_PromotionRegistration_RegistryDoesNotRegisterDiscountPromotionForInvalidProduct)
 {
     Registry registry;
     registry.add_promotion(10, 0.2);
     EXPECT_EQ(registry.promotions.size(), 0);
 }
 
-TEST(
-  KasaTests,
-  ProductPromotions_PromotionRegistration_RegistryCorrectlyRegistersBulkPromotion)
+TEST(KasaTests,
+     Promotions_PromotionRegistration_RegistryCorrectlyRegistersBulkPromotion)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -61,15 +58,26 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductPromotions_PromotionRegistration_RegistryDoesNotRegisterBulkPromotionForInvalidProduct)
+  Promotions_PromotionRegistration_RegistryDoesNotRegisterBulkPromotionForInvalidProduct)
 {
     Registry registry;
     registry.add_promotion(10, 3);
     EXPECT_EQ(registry.promotions.size(), 0);
 }
 
+TEST(
+  KasaTests,
+  Promotions_PromotionRegistrationForSameProductIdentifier_RegistryIgnoresPromotionRegistrationForIdentifierWithAlreadyRegisteredPromotion)
+{
+    Registry registry;
+    registry.add(Product(10, "apple", 10.00));
+    registry.add_promotion(10, 0.2);
+    registry.add_promotion(10, 5);
+    EXPECT_EQ(registry.promotions.at(10).type, PromotionType::DISCOUNT);
+}
+
 TEST(KasaTests,
-     ProductPromotions_PromotionActivation_RegistryCorrectlyActivatesPromotion)
+     Promotions_PromotionActivation_RegistryCorrectlyActivatesPromotion)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -78,9 +86,8 @@ TEST(KasaTests,
     EXPECT_EQ(registry.promotions.at(10).is_active, true);
 }
 
-TEST(
-  KasaTests,
-  ProductPromotions_PromotionActivation_RegistryCorrectlyDeactivatesPromotion)
+TEST(KasaTests,
+     Promotions_PromotionActivation_RegistryCorrectlyDeactivatesPromotion)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -92,7 +99,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductPromotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnActivatedLoyaltyCard)
+  Promotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnActivatedLoyaltyCard)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -107,7 +114,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductPromotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnDeactivatedLoyaltyCard)
+  Promotions_PromotionStatusUpdateViaLoyaltyCard_RegistryCorrectlyActivatesPromotionsBasedOnDeactivatedLoyaltyCard)
 {
     Registry registry;
     registry.add(Product(10, "apple", 10.00));
@@ -127,7 +134,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductCardAddition_RegisteringCardViaProductAdd_LoyaltyCardActivatesWhenRegisteringCorrectIdentifier)
+  CartCardAddition_RegisteringCardViaProductAdd_LoyaltyCardActivatesWhenRegisteringCorrectIdentifier)
 {
     Registry registry;
     Cart cart;
@@ -139,7 +146,7 @@ TEST(
 
 TEST(
   KasaTests,
-  ProductCardAddition_UnregisteringCardViaProductAdd_LoyaltyCardDeactivatesWhenRegisteringCorrectIdentifier)
+  CartCardAddition_UnregisteringCardViaProductAdd_LoyaltyCardDeactivatesWhenRegisteringCorrectIdentifier)
 {
     Registry registry;
     Cart cart;
@@ -150,9 +157,8 @@ TEST(
     EXPECT_EQ(registry.promotions.at(10).is_active, false);
 }
 
-TEST(
-  KasaTests,
-  ProductCartClosing_LoyaltyCardDeactivation_CardIsDeactivatedWhenClosingCart)
+TEST(KasaTests,
+     CartClosing_LoyaltyCardDeactivation_CardIsDeactivatedWhenClosingCart)
 {
     Registry registry;
     Cart cart;

@@ -218,6 +218,130 @@ TEST(
 
 TEST(
   KasaTests,
+  CartTotalCalculation_ExampleCartTotalCalculationWithPromotions_ProperlyCaculateExampleCartWithPromotions)
+{
+    Registry registry;
+    registry.add(Product(1, "apple", 10.00));
+    registry.add_promotion(1, 5);
+    registry.add(Product(2, "kiwi", 10.00));
+    registry.add_promotion(2, 0.2);
+    registry.add(Product(3, "banana", 10.00));
+    Cart cart;
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 2);
+    cart.add(registry, 3);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    EXPECT_EQ(cart.calculateValue(registry),
+              10.00 * 4 + 10.00 * (1 - 0.2) + 10.00);
+}
+
+TEST(
+  KasaTests,
+  CartTotalCalculation_CartValueOfBulkPromotionWhenDeletingItem_CartRevertsToNormalPricingIfBulkPromotionDoesNotHoldAfterDelete)
+{
+    Registry registry;
+    Cart cart;
+    registry.add(Product(1, "apple", 10.00));
+    registry.add_promotion(1, 5);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    cart.del(1);
+    EXPECT_EQ(cart.calculateValue(registry), 10.00 * 4);
+}
+
+TEST(
+  KasaTests,
+  CartTotalCalculation_CartValueOfBulkPromotionWhenProductFree_CartValueIsZero)
+{
+    Registry registry;
+    Cart cart;
+    registry.add(Product(1, "apple", 0.00));
+    registry.add_promotion(1, 5);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    EXPECT_EQ(cart.calculateValue(registry), 0.00);
+}
+
+TEST(
+  KasaTests,
+  CartTotalCalculation_CartValueOfDiscountPromotionWhenProductFree_CartValueIsZero)
+{
+    Registry registry;
+    Cart cart;
+    registry.add(Product(1, "apple", 0.00));
+    registry.add_promotion(1, 0.5);
+    cart.add(registry, 1);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    EXPECT_EQ(cart.calculateValue(registry), 0.00);
+}
+
+TEST(
+  KasaTests,
+  CartTotalCalculation_ExampleCartTotalCalculationWithoutPromotions_ProperlyCaculateExampleCartWithoutPromotions)
+{
+    Registry registry;
+    registry.add(Product(1, "apple", 10.00));
+    registry.add_promotion(1, 5);
+    registry.add(Product(2, "kiwi", 10.00));
+    registry.add_promotion(2, 0.2);
+    registry.add(Product(3, "banana", 10.00));
+    Cart cart;
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 2);
+    cart.add(registry, 3);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    EXPECT_EQ(cart.calculateValue(registry), 10.00 * 5 + 10.00 + 10.00);
+}
+
+TEST(
+  KasaTests,
+  CartTotalCalculation_PromotionCalculationAfterCardActivation_ProperlyAppliesPromotionsAfterLoyaltyCardWasScanned)
+{
+    Registry registry;
+    registry.add(Product(1, "apple", 10.00));
+    registry.add_promotion(1, 5);
+    registry.add(Product(2, "kiwi", 10.00));
+    registry.add_promotion(2, 0.2);
+    registry.add(Product(3, "banana", 10.00));
+    Cart cart;
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, loyalty_card_identifier);
+    registry.update_promotion_status();
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 1);
+    cart.add(registry, 2);
+    cart.add(registry, 3);
+    EXPECT_EQ(cart.calculateValue(registry),
+              10.00 * 4 + 10.00 * (1 - 0.2) + 10.00);
+}
+
+TEST(
+  KasaTests,
   CartClosing_RandomizedCartLengthClosing_CartIsFullyEmptiedByDeletingEveryProductIdentifier)
 {
     Registry registry;
